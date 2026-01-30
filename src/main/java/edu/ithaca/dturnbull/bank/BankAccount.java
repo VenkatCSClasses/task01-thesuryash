@@ -43,12 +43,23 @@ public class BankAccount {
         if (email.indexOf('@') == -1){
             return false;
         }
+        //Check periods and comes after @
         if (email.indexOf('.') == -1 ||email.indexOf('@') > email.indexOf('.')){
             return false;
         }
-        
+        //Check for empty string
         if (email.isEmpty()){
             return false;             
+        }
+        
+        // Check for consecutive periods
+        if (email.contains("..")){
+            return false;
+        }
+        
+        // Check for period next to @
+        if (email.contains(".@") || email.contains("@.")){
+            return false;
         }
 
         
