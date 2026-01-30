@@ -43,8 +43,15 @@ public class BankAccount {
         if (email.indexOf('@') == -1){
             return false;
         }
-        else {
-            return true;
+        if (email.indexOf('.') == -1 ||email.indexOf('@') > email.indexOf('.')){
+            return false;
         }
+        
+        if (email.isEmpty()){
+            return false;             
+        }
+
+        
+        return true;
     }
 }
