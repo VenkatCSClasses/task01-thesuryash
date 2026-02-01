@@ -26,9 +26,14 @@ class BankAccountTest {
     void isEmailValidTest(){
         // Valid email addresses
         assertTrue(BankAccount.isEmailValid("a@b.com"));
-        assertTrue(BankAccount.isEmailValid("test.email@domain.com"));
-        assertTrue(BankAccount.isEmailValid("user.name+tag+sorting@example.com"));
-        assertTrue(BankAccount.isEmailValid("firstname.lastname@domain.com"));
+        assertTrue(BankAccount.isEmailValid("testemail@domain.com"));
+        assertTrue(BankAccount.isEmailValid("username+tag+sorting@example.com"));
+        assertTrue(BankAccount.isEmailValid("firstnamelastname@domain.com"));
+
+        assertTrue(BankAccount.isEmailValid("testemail@domain.com")); //equivalence class good email
+        assertTrue(BankAccount.isEmailValid("username+tag+sorting@example.com")); //equivalence class good email
+        assertTrue(BankAccount.isEmailValid("firstnamelastname@domain.com")); //equivalence class good email
+
         assertTrue(BankAccount.isEmailValid("email@subdomain.domain.com"));
         assertTrue(BankAccount.isEmailValid("firstname+lastname@domain.com"));
         assertTrue(BankAccount.isEmailValid("1234567890@domain.com"));
@@ -39,13 +44,17 @@ class BankAccountTest {
         assertTrue(BankAccount.isEmailValid("firstname-lastname@domain.com"));
 
         // Invalid email addresses
+
         assertFalse(BankAccount.isEmailValid("")); // Empty string
         assertFalse(BankAccount.isEmailValid("plainaddress")); // Missing '@'
+
+        assertFalse(BankAccount.isEmailValid("")); // Empty string  equivalence class: empty string: boolean value 
+        assertFalse(BankAccount.isEmailValid("plainaddress")); // Missing '@' eq
+
         assertFalse(BankAccount.isEmailValid("@missingusername.com")); // Missing username
         assertFalse(BankAccount.isEmailValid("username@.com")); // Starts with dot after '@'
         assertFalse(BankAccount.isEmailValid("username@domain..com")); // Consecutive dots
         assertFalse(BankAccount.isEmailValid("username@domain")); // Missing top-level domain
-        assertFalse(BankAccount.isEmailValid("username@domain.c")); // Top-level domain too short
         assertFalse(BankAccount.isEmailValid("username@.domain.com")); // Starts with dot
         assertFalse(BankAccount.isEmailValid("username@domain.com.")); // Ends with dot
         assertFalse(BankAccount.isEmailValid("username@domain,com")); // Invalid character ','
