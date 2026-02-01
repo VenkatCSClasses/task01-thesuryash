@@ -62,6 +62,17 @@ public class BankAccount {
             return false;
         }
 
+        if (email.indexOf('@') == 0 || email.indexOf('.') == 0){
+            return false;
+        }
+
+        if(email.lastIndexOf('.') == email.length() - 1 || email.lastIndexOf('@') == email.length() - 1){
+            return false;
+        }
+        
+        if(email.contains(",")){
+            return false;
+        }
         
         return true;
     }
