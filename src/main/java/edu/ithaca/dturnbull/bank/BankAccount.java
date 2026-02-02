@@ -43,7 +43,24 @@ public class BankAccount {
         }}
     }
 
+    public void deposit(double amount){
+        if (amount < 0){
+            throw new IllegalArgumentException("Cannot deposit negative amount");
+        }
+        balance += amount;
+    }
 
+    public void transferTo(BankAccount other, double amount) throws InsufficientFundsException{
+        if (isAmountValid(amount)){   
+        this.withdraw(amount);
+        other.deposit(amount);
+    } else{
+            throw new IllegalArgumentException("Cannot transfer negative amount");
+        }}
+
+    public static boolean isAmountValid(double amount){
+        return amount >= 0;
+    }
 
     public static boolean isEmailValid(String email){
         if (email.indexOf('@') == -1){
@@ -79,7 +96,7 @@ public class BankAccount {
         if(email.contains(",")){
             return false;
         }
-        
+
         return true;
     }
 }
