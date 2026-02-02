@@ -23,6 +23,30 @@ class BankAccountTest {
     }
 
     @Test
+    void withdrawNegativeAmountTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        // withdrawing a negative amount should be invalid
+        assertThrows(IllegalArgumentException.class, () -> {
+            try {
+                bankAccount.withdraw(-50);
+            } catch (InsufficientFundsException e) {
+                // convert checked exception to runtime for lambda compatibility
+                throw new RuntimeException(e);
+            }
+        });
+        // balance should remain unchanged
+        assertEquals(200, bankAccount.getBalance(), 0.001);
+    }
+
+    @Test
+    void withdrawZeroAmountTest() throws InsufficientFundsException{
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.withdraw(0);
+        // withdrawing zero should not change balance
+        assertEquals(200, bankAccount.getBalance(), 0.001);
+    }
+
+    @Test
     void isEmailValidTest(){
         // Valid email addresses
         assertTrue(BankAccount.isEmailValid("a@b.com"));
