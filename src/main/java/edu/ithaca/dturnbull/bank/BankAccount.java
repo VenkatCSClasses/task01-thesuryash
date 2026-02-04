@@ -42,37 +42,59 @@ public class BankAccount {
             throw new InsufficientFundsException("Not enough money");
         }}
     }
-
+    /**
+     * @post increases the balance by amount if amount is non-negative
+     */
     public void deposit(double amount){
         if (amount < 0){
             throw new IllegalArgumentException("Cannot deposit negative amount");
         }
         balance += amount;
     }
-
+/**
+ * @post transfers amount from this account to other account if amount is non-negative and smaller than balance
+ * @param other
+ * @param amount
+ * @throws InsufficientFundsException
+ */
     public void transferTo(BankAccount other, double amount) throws InsufficientFundsException{
-        if (isAmountValid(amount)){   
+        if (amount < 0){
+            throw new IllegalArgumentException("Cannot transfer negative amount");
+        }
+        if (amount > this.balance){
+            throw new InsufficientFundsException("Not enough money");
+        }
         this.withdraw(amount);
         other.deposit(amount);
-    } else{
-            throw new IllegalArgumentException("Cannot transfer negative amount");
-        }}
+    }
 
-    public static boolean isAmountValid(double amount){
-        return amount >= 0;
+    public boolean isAmountValid(double amount){
+        return (amount >= 0 && this.balance >= amount);
     }
 
     public static boolean isEmailValid(String email){
-        if (email.indexOf('@') == -1){
-            return false;
-        }
-        //Check periods and comes after @
-        if (email.indexOf('.') == -1 ||email.indexOf('@') > email.indexOf('.')){
-            return false;
-        }
         //Check for empty string
         if (email.isEmpty()){
             return false;             
+        }
+        
+        if (email.indexOf('@') == -1){
+            return false;
+        }
+        
+        // Check for multiple @ signs
+        if (email.indexOf('@') != email.lastIndexOf('@')){
+            return false;
+        }
+        
+        // Check for spaces
+        if (email.contains(" ")){
+            return false;
+        }
+        
+        //Check periods and comes after @
+        if (email.indexOf('.') == -1 ||email.lastIndexOf('.') < email.indexOf('@')){
+            return false;
         }
         
         // Check for consecutive periods
